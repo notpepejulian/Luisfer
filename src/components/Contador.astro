@@ -1,0 +1,34 @@
+---
+interface Props {
+  valor: number;
+}
+const { valor } = Astro.props;
+---
+
+<span class="contador" data-contador={valor}>{valor}</span>
+
+<script>
+  const animar = (el: HTMLElement) => {
+    const fin = Number(el.dataset.contador);
+    const duracion = 1200;
+    const inicio = performance.now();
+    const paso = (t: number) => {
+      const p = Math.min((t - inicio) / duracion, 1);
+      el.textContent = String(Math.round(fin * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) requestAnimationFrame(paso);
+    };
+    requestAnimationFrame(paso);
+  };
+
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const obs = new IntersectionObserver((entradas) => {
+      for (const e of entradas) {
+        if (e.isIntersecting) {
+          animar(e.target as HTMLElement);
+          obs.unobserve(e.target);
+        }
+      }
+    });
+    document.querySelectorAll<HTMLElement>('[data-contador]').forEach((el) => obs.observe(el));
+  }
+</script>

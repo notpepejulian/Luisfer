@@ -2,6 +2,10 @@
 import { Image } from 'astro:assets';
 import hero from '../assets/hero.jpg';
 import { negocio } from '../data/negocio';
+import { getValoraciones, formatoNota } from '../lib/valoraciones';
+import Contador from './Contador.astro';
+
+const { global } = await getValoraciones();
 ---
 
 <section id="inicio" class="hero">
@@ -17,8 +21,8 @@ import { negocio } from '../data/negocio';
     </div>
     <a class="rating" href="#resenas">
       <span class="stars" aria-hidden="true">★★★★★</span>
-      <strong>{negocio.valoracion.toFixed(1).replace('.', ',')}</strong>
-      <span>en Google · {negocio.totalResenas} reseñas</span>
+      <strong>{formatoNota(global.nota)}</strong>
+      <span><Contador valor={global.total} /> reseñas en Google y Booksy</span>
     </a>
   </div>
 </section>

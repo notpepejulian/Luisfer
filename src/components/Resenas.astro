@@ -1,20 +1,38 @@
 ---
 import { resenas, negocio } from '../data/negocio';
-const nota = negocio.valoracion.toFixed(1).replace('.', ',');
+import { getValoraciones, formatoNota } from '../lib/valoraciones';
+import { haceCuanto } from '../lib/tiempo';
+import Contador from './Contador.astro';
+
+const v = await getValoraciones();
+const plataformas = [
+  { nombre: 'Google', datos: v.google, url: negocio.mapsUrl },
+  { nombre: 'Booksy', datos: v.booksy, url: negocio.booksyUrl },
+];
 ---
 
 <section id="resenas" class="section">
   <div class="container">
     <div class="section-head">
-      <p class="eyebrow">Opiniones en Google</p>
+      <p class="eyebrow">Opiniones de clientes</p>
       <h2 class="section-title">Lo que dicen nuestros clientes</h2>
-      <div class="summary">
-        <span class="nota">{nota}</span>
-        <div>
-          <span class="stars" aria-label={`${nota} de 5 estrellas`}>★★★★★</span>
-          <p>{negocio.totalResenas} reseñas en Google</p>
-        </div>
-      </div>
+    </div>
+    <div class="plataformas">
+      {
+        plataformas.map((p) => (
+          <a class="plataforma" href={p.url} target="_blank" rel="noopener">
+            <span class="nota">{formatoNota(p.datos.nota)}</span>
+            <div>
+              <span class="stars" aria-label={`${formatoNota(p.datos.nota)} de 5 estrellas`}>
+                ★★★★★
+              </span>
+              <p>
+                <Contador valor={p.datos.total} /> reseñas en <strong>{p.nombre}</strong>
+              </p>
+            </div>
+          </a>
+        ))
+      }
     </div>
     <ul class="grid">
       {
@@ -26,7 +44,9 @@ const nota = negocio.valoracion.toFixed(1).replace('.', ',');
               <span class="avatar" aria-hidden="true">{r.autor.charAt(0).toUpperCase()}</span>
               <div>
                 <strong>{r.autor}</strong>
-                <small>{r.fecha} · Google</small>
+                <small>
+                  <time datetime={r.fecha} data-relativo>{haceCuanto(r.fecha)}</time> · {r.fuente}
+                </small>
               </div>
             </div>
           </li>
@@ -34,31 +54,56 @@ const nota = negocio.valoracion.toFixed(1).replace('.', ',');
       }
     </ul>
     <div class="center">
-      <a class="btn btn-ghost" href={negocio.mapsUrl} target="_blank" rel="noopener">Ver todas las reseñas en Google</a>
+      <a class="btn btn-ghost" href={negocio.mapsUrl} target="_blank" rel="noopener">Ver reseñas en Google</a>
+      <a class="btn btn-ghost" href={negocio.booksyUrl} target="_blank" rel="noopener">Ver reseñas en Booksy</a>
     </div>
   </div>
 </section>
 
+<script>
+  import { haceCuanto } from '../lib/tiempo';
+  document.querySelectorAll<HTMLTimeElement>('time[data-relativo]').forEach((t) => {
+    t.textContent = haceCuanto(t.dateTime);
+  });
+</script>
+
 <style>
-  .summary {
-    display: inline-flex;
+  .plataformas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+    margin: -1rem 0 3rem;
+  }
+  .plataforma {
+    display: flex;
     align-items: center;
     gap: 1rem;
-    margin-top: 0.5rem;
-    text-align: left;
+    padding: 1rem 1.5rem;
+    background: var(--bg-2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+  .plataforma:hover {
+    border-color: var(--gold);
   }
   .nota {
     font-family: var(--font-title);
-    font-size: 3.5rem;
+    font-size: 3rem;
     line-height: 1;
     color: var(--gold);
   }
-  .summary .stars {
-    font-size: 1.3rem;
+  .plataforma .stars {
+    font-size: 1.2rem;
   }
-  .summary p {
+  .plataforma p {
     margin: 0;
     color: var(--muted);
+  }
+  .plataforma strong {
+    color: var(--text);
   }
   .grid {
     list-style: none;
@@ -100,7 +145,10 @@ const nota = negocio.valoracion.toFixed(1).replace('.', ',');
     color: var(--muted);
   }
   .center {
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
     margin-top: 3rem;
   }
 </style>

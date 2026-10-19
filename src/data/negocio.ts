@@ -16,8 +16,12 @@ export const negocio = {
   mapsEmbed:
     'https://www.google.com/maps?q=C.+Miguel+de+Moncada+13,+28804+Alcal%C3%A1+de+Henares&output=embed',
   instagram: '',
-  valoracion: 5.0,
-  totalResenas: 8,
+};
+
+// Valores de respaldo: se usan si no se pueden obtener en vivo al compilar (ver src/lib/valoraciones.ts).
+export const valoracionesRespaldo = {
+  google: { nota: 5.0, total: 8 },
+  booksy: { nota: 5.0, total: 153 },
 };
 
 export const horario = [
@@ -27,39 +31,45 @@ export const horario = [
 ];
 
 export const servicios = [
-  { nombre: 'Corte de pelo', descripcion: 'Corte a máquina y tijera, lavado y peinado.', precio: 12, duracion: 30 },
-  { nombre: 'Degradado / Fade', descripcion: 'Skin, low, mid o high fade con acabado a navaja.', precio: 14, duracion: 40 },
-  { nombre: 'Corte + Barba', descripcion: 'Corte completo y arreglo de barba con perfilado.', precio: 18, duracion: 50, destacado: true },
-  { nombre: 'Arreglo de barba', descripcion: 'Rebaje, perfilado a navaja y toalla caliente.', precio: 8, duracion: 20 },
-  { nombre: 'Afeitado clásico', descripcion: 'Afeitado a navaja con toalla caliente y aftershave.', precio: 10, duracion: 25 },
-  { nombre: 'Corte infantil', descripcion: 'Para menores de 12 años.', precio: 10, duracion: 25 },
-  { nombre: 'Diseño / Raya', descripcion: 'Líneas y dibujos a navaja.', precio: 3, duracion: 10 },
-  { nombre: 'Cejas', descripcion: 'Perfilado de cejas a navaja.', precio: 3, duracion: 5 },
+  { nombre: 'Corte de Pelo', precio: 14, duracion: 30, popular: true },
+  { nombre: 'Corte y Barba', precio: 24, duracion: 45, popular: true },
+  { nombre: 'Barba', precio: 10, duracion: 15 },
+  { nombre: 'Corte y Perilla', precio: 20, duracion: 45, popular: true },
 ];
 
+export const categoriasServicios = [
+  { nombre: 'Servicios más populares', servicios: servicios.filter((s) => s.popular), destacada: true },
+  { nombre: 'Barbería', servicios },
+];
+
+// fecha: día de publicación (AAAA-MM-DD). El "hace X días" se calcula automáticamente.
 export const resenas = [
   {
     autor: 'Nacho',
-    fecha: 'Hace una semana',
+    fecha: '2026-10-12',
+    fuente: 'Google',
     estrellas: 5,
     texto: 'Un servicio de 10, calidad, buen ambiente y buen corte. El mejor barbero de Alcalá al que he ido.',
   },
   {
     autor: 'Alvaro Soublett',
-    fecha: 'Hace 2 días',
+    fecha: '2026-10-17',
+    fuente: 'Google',
     estrellas: 5,
     texto:
       'Quieres un corte de estilo profesional, con acabados en detalle, visita La Barbería Luisfer y te realizará el corte de tu preferencia con un estilo que solo él puede lograr… ¡100% recomendado!',
   },
   {
     autor: 'LUIS PREZ',
-    fecha: 'Hace 2 días',
+    fecha: '2026-10-17',
+    fuente: 'Google',
     estrellas: 5,
     texto: 'Corte excelente y comodidad 10/10.',
   },
   {
     autor: 'David Cortijo',
-    fecha: 'Hace 2 días',
+    fecha: '2026-10-17',
+    fuente: 'Google',
     estrellas: 5,
     texto: 'Un gran barbero y gran trato.',
   },

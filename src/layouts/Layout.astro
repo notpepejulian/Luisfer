@@ -1,5 +1,8 @@
 ---
 import { negocio, horario } from '../data/negocio';
+import { getValoraciones } from '../lib/valoraciones';
+
+const { global } = await getValoraciones();
 
 interface Props {
   title?: string;
@@ -26,8 +29,8 @@ const jsonLd = {
   },
   aggregateRating: {
     '@type': 'AggregateRating',
-    ratingValue: negocio.valoracion,
-    reviewCount: negocio.totalResenas,
+    ratingValue: Number(global.nota.toFixed(1)),
+    reviewCount: global.total,
   },
   openingHours: horario.map((h) => `${h.dias}: ${h.horas}`),
 };

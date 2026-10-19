@@ -1,0 +1,75 @@
+---
+import { Image } from 'astro:assets';
+import { galeria } from '../data/galeria';
+---
+
+<section id="galeria" class="section alt">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Nuestro trabajo</p>
+      <h2 class="section-title">Cortes</h2>
+      <p>Degradados, cortes clásicos, barbas y afeitados. Algunos de nuestros trabajos.</p>
+    </div>
+    <ul class="grid">
+      {
+        galeria.map((g) => (
+          <li class:list={['item', g.forma]}>
+            <Image src={g.src} alt={g.titulo} widths={[400, 700]} sizes="(max-width: 700px) 50vw, 25vw" />
+            <span class="label">{g.titulo}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .alt {
+    background: var(--bg-2);
+  }
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 240px;
+    grid-auto-flow: dense;
+    gap: 1rem;
+  }
+  .item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+  }
+  .alta {
+    grid-row: span 2;
+  }
+  .ancha {
+    grid-column: span 2;
+  }
+  .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .item:hover img {
+    transform: scale(1.06);
+  }
+  .label {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 2.5rem 1rem 0.9rem;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent);
+    font-family: var(--font-title);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 200px;
+    }
+  }
+</style>

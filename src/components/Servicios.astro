@@ -1,0 +1,106 @@
+---
+import { servicios, negocio } from '../data/negocio';
+---
+
+<section id="servicios" class="section">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Servicios</p>
+      <h2 class="section-title">Precios</h2>
+      <p>Precios con IVA incluido. Elige tu servicio y reserva tu hueco en Booksy.</p>
+    </div>
+    <ul class="grid">
+      {
+        servicios.map((s) => (
+          <li class:list={['card', { destacado: s.destacado }]}>
+            {s.destacado && <span class="badge">Más pedido</span>}
+            <div class="row">
+              <h3>{s.nombre}</h3>
+              <span class="dots" aria-hidden="true" />
+              <span class="precio">{s.precio} €</span>
+            </div>
+            <p>{s.descripcion}</p>
+            <span class="duracion">{s.duracion} min</span>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="center">
+      <a class="btn btn-primary" href={negocio.booksyUrl} target="_blank" rel="noopener">Reservar en Booksy</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 1.25rem;
+  }
+  .card {
+    position: relative;
+    background: var(--bg-2);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .card:hover {
+    border-color: rgba(201, 164, 92, 0.5);
+    transform: translateY(-3px);
+  }
+  .destacado {
+    border-color: var(--gold);
+  }
+  .badge {
+    position: absolute;
+    top: -0.7rem;
+    right: 1.25rem;
+    background: var(--gold);
+    color: #111;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+  }
+  .row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
+  .dots {
+    flex: 1;
+    border-bottom: 2px dotted rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+  }
+  .precio {
+    font-family: var(--font-title);
+    font-size: 1.5rem;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  p {
+    color: var(--muted);
+    margin: 0.5rem 0 0.75rem;
+    font-size: 0.95rem;
+  }
+  .duracion {
+    font-size: 0.8rem;
+    color: var(--muted);
+    background: var(--bg-3);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+  .center {
+    text-align: center;
+    margin-top: 3rem;
+  }
+</style>

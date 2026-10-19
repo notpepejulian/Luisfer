@@ -1,0 +1,128 @@
+---
+import { Image } from 'astro:assets';
+import herramientas from '../assets/herramientas.jpg';
+import { negocio, horario } from '../data/negocio';
+---
+
+<section id="contacto" class="section alt">
+  <div class="container grid">
+    <div class="info">
+      <p class="eyebrow">Visítanos</p>
+      <h2 class="section-title">Dónde estamos</h2>
+      <dl>
+        <div>
+          <dt>Dirección</dt>
+          <dd>
+            <a href={negocio.mapsUrl} target="_blank" rel="noopener">
+              {negocio.direccion}<br />{negocio.cp} {negocio.ciudad}, {negocio.provincia}
+            </a>
+          </dd>
+        </div>
+        <div>
+          <dt>Teléfono</dt>
+          <dd><a href={negocio.telefonoHref}>{negocio.telefono}</a></dd>
+        </div>
+        <div>
+          <dt>Horario</dt>
+          <dd>
+            <table>
+              <tbody>
+                {
+                  horario.map((h) => (
+                    <tr>
+                      <th scope="row">{h.dias}</th>
+                      <td>{h.horas}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </dd>
+        </div>
+      </dl>
+      <div class="actions">
+        <a class="btn btn-primary" href={negocio.booksyUrl} target="_blank" rel="noopener">Reservar en Booksy</a>
+        <a class="btn btn-ghost" href={negocio.mapsUrl} target="_blank" rel="noopener">Cómo llegar</a>
+      </div>
+    </div>
+    <div class="media">
+      <iframe
+        title={`Mapa de ${negocio.nombre}`}
+        src={negocio.mapsEmbed}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <Image src={herramientas} alt="Herramientas de barbero" class="tools" widths={[400, 700]} sizes="(max-width: 900px) 100vw, 40vw" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .alt {
+    background: var(--bg-2);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  dl {
+    display: grid;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  dt {
+    color: var(--gold);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  dd {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+  dd a {
+    text-decoration: none;
+  }
+  dd a:hover {
+    color: var(--gold);
+  }
+  table {
+    border-collapse: collapse;
+  }
+  th {
+    text-align: left;
+    font-weight: 400;
+    color: var(--muted);
+    padding: 0.15rem 1.5rem 0.15rem 0;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .media {
+    display: grid;
+    gap: 1rem;
+  }
+  iframe {
+    width: 100%;
+    height: 320px;
+    border: 0;
+    border-radius: var(--radius);
+    filter: grayscale(1) invert(0.9) contrast(0.9);
+  }
+  .tools {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

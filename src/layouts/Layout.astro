@@ -1,0 +1,183 @@
+---
+import { negocio, horario } from '../data/negocio';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${negocio.nombre} | Barbería en ${negocio.ciudad}`,
+  description = `${negocio.eslogan}. Reserva tu cita online en Booksy. ${negocio.direccion}, ${negocio.ciudad}.`,
+} = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BarberShop',
+  name: negocio.nombre,
+  telephone: `+34 ${negocio.telefono}`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: negocio.direccion,
+    postalCode: negocio.cp,
+    addressLocality: negocio.ciudad,
+    addressRegion: negocio.provincia,
+    addressCountry: 'ES',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: negocio.valoracion,
+    reviewCount: negocio.totalResenas,
+  },
+  openingHours: horario.map((h) => `${h.dias}: ${h.horas}`),
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0e0e0e" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #0e0e0e;
+    --bg-2: #161616;
+    --bg-3: #1f1f1f;
+    --text: #f2efe9;
+    --muted: #a8a29a;
+    --gold: #c9a45c;
+    --gold-2: #e0c07f;
+    --radius: 14px;
+    --max: 1180px;
+    --font-title: 'Oswald', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img {
+    max-width: 100%;
+    display: block;
+  }
+  a {
+    color: inherit;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-title);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .container {
+    width: min(100% - 2.5rem, var(--max));
+    margin-inline: auto;
+  }
+  .section {
+    padding: clamp(4rem, 9vw, 7rem) 0;
+  }
+  .eyebrow {
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    margin: 0 0 0.75rem;
+  }
+  .section-title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    margin-bottom: 1rem;
+  }
+  .section-head {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+  }
+  .section-head p:last-child {
+    color: var(--muted);
+    margin: 0;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: #111;
+  }
+  .btn-primary:hover {
+    background: var(--gold-2);
+  }
+  .btn-ghost {
+    border-color: rgba(255, 255, 255, 0.35);
+    color: var(--text);
+  }
+  .btn-ghost:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .stars {
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    * {
+      transition: none !important;
+    }
+  }
+</style>

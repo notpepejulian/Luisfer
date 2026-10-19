@@ -1,0 +1,60 @@
+---
+import { negocio } from '../data/negocio';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container inner">
+    <p class="logo">Luisfer<span>barberia</span></p>
+    <p>{negocio.direccion}, {negocio.cp} {negocio.ciudad} · <a href={negocio.telefonoHref}>{negocio.telefono}</a></p>
+    <p class="small">© {year} {negocio.nombre}. Reservas gestionadas por Booksy.</p>
+  </div>
+</footer>
+
+<a class="btn btn-primary fab" href={negocio.booksyUrl} target="_blank" rel="noopener">Reservar cita</a>
+
+<style>
+  .footer {
+    padding: 3rem 0 6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+    color: var(--muted);
+  }
+  .logo {
+    font-family: var(--font-title);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: var(--text);
+    margin: 0 0 0.5rem;
+  }
+  .logo span {
+    color: var(--gold);
+  }
+  p {
+    margin: 0.25rem 0;
+  }
+  a {
+    text-decoration: none;
+  }
+  .small {
+    font-size: 0.85rem;
+  }
+  .fab {
+    display: none;
+  }
+  @media (max-width: 760px) {
+    .footer {
+      padding-bottom: 7rem;
+    }
+    .fab {
+      display: flex;
+      justify-content: center;
+      position: fixed;
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 60;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+  }
+</style>

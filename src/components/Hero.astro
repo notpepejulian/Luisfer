@@ -1,0 +1,82 @@
+---
+import { Image } from 'astro:assets';
+import hero from '../assets/hero.jpg';
+import { negocio } from '../data/negocio';
+---
+
+<section id="inicio" class="hero">
+  <Image src={hero} alt="Interior de la barbería" class="bg" loading="eager" fetchpriority="high" widths={[640, 1000]} sizes="100vw" />
+  <div class="overlay"></div>
+  <div class="container content">
+    <p class="eyebrow">Barbería en {negocio.ciudad}</p>
+    <h1>Tu mejor corte,<br /><span>al detalle</span></h1>
+    <p class="lead">{negocio.eslogan}. Reserva en segundos desde Booksy.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href={negocio.booksyUrl} target="_blank" rel="noopener">Reservar cita en Booksy</a>
+      <a class="btn btn-ghost" href="#servicios">Ver precios</a>
+    </div>
+    <a class="rating" href="#resenas">
+      <span class="stars" aria-hidden="true">★★★★★</span>
+      <strong>{negocio.valoracion.toFixed(1).replace('.', ',')}</strong>
+      <span>en Google · {negocio.totalResenas} reseñas</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: center;
+    overflow: hidden;
+    padding: 110px 0 60px;
+  }
+  .bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(14, 14, 14, 0.95) 0%, rgba(14, 14, 14, 0.7) 55%, rgba(14, 14, 14, 0.35) 100%),
+      linear-gradient(0deg, var(--bg) 0%, transparent 30%);
+  }
+  .content {
+    position: relative;
+    max-width: var(--max);
+  }
+  h1 {
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    max-width: 14ch;
+  }
+  h1 span {
+    color: var(--gold);
+  }
+  .lead {
+    color: var(--muted);
+    font-size: 1.15rem;
+    max-width: 46ch;
+    margin: 1.5rem 0 2rem;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 2.5rem;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .rating strong {
+    color: var(--text);
+  }
+</style>

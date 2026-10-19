@@ -4,7 +4,7 @@ export const negocio = {
   nombre: 'Luisferbarberia',
   eslogan: 'Cortes con estilo y acabados en detalle en Alcalá de Henares',
   // Sustituye por el enlace de tu perfil de Booksy (Booksy Biz > Perfil > Compartir)
-  booksyUrl: 'https://booksy.com/es-es/s/barberia/alcala-de-henares',
+  booksyUrl: 'https://booksy.com/es-es/186566_luisfer-barberia_barberia_53184_alcala-de-henares#ba_s=sh_1',
   telefono: '742 00 97 00',
   telefonoHref: 'tel:+34742009700',
   direccion: 'C. Miguel de Moncada, 13',

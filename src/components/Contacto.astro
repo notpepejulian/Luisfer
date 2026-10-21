@@ -1,7 +1,12 @@
 ---
 import { Image } from 'astro:assets';
 import herramientas from '../assets/herramientas.jpg';
-import { negocio, horario } from '../data/negocio';
+import type { ImageMetadata } from 'astro';
+import { negocio, horario, barberos } from '../data/negocio';
+
+const fotos = import.meta.glob<{ default: ImageMetadata }>('../assets/barberos/*.{jpg,jpeg,png,webp}', { eager: true });
+const fotoDe = (nombre: string) =>
+  Object.entries(fotos).find(([ruta]) => ruta.split('/').pop()!.replace(/\.\w+$/, '') === nombre)?.[1].default;
 ---
 
 <section id="contacto" class="section alt">
@@ -37,6 +42,40 @@ import { negocio, horario } from '../data/negocio';
                 }
               </tbody>
             </table>
+          </dd>
+        </div>
+        <div>
+          <dt>Barberos</dt>
+          <dd>
+            <ul class="barberos">
+              {
+                barberos.map((b) => {
+                  const foto = fotoDe(b.foto);
+                  return (
+                    <li class="barbero">
+                      {foto ? (
+                        <Image src={foto} alt={`Foto de ${b.nombre}`} class="avatar" width={128} height={128} />
+                      ) : (
+                        <span class="avatar iniciales" aria-hidden="true">{b.nombre.charAt(0)}</span>
+                      )}
+                      <div>
+                        <p class="nombre">{b.nombre}</p>
+                        <table>
+                          <tbody>
+                            {b.horario.map((h) => (
+                              <tr>
+                                <th scope="row">{h.dias}</th>
+                                <td>{h.horas.map((t, i) => (<>{i > 0 && <br />}{t}</>))}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </li>
+                  );
+                })
+              }
+            </ul>
           </dd>
         </div>
       </dl>
@@ -97,6 +136,56 @@ import { negocio, horario } from '../data/negocio';
     font-weight: 400;
     color: var(--muted);
     padding: 0.15rem 1.5rem 0.15rem 0;
+  }
+  .barberos {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .barbero {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .avatar {
+    flex: none;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold);
+  }
+  .iniciales {
+    display: grid;
+    place-items: center;
+    background: var(--gold);
+    color: var(--bg);
+    font-family: var(--font-title);
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+  .nombre {
+    margin: 0 0 0.35rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  .barbero table {
+    font-size: 0.9rem;
+  }
+  .barbero th,
+  .barbero td {
+    vertical-align: top;
+    white-space: nowrap;
+  }
+  .barbero th {
+    padding-right: 1rem;
   }
   .actions {
     display: flex;

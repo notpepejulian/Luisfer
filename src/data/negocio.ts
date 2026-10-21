@@ -25,9 +25,31 @@ export const valoracionesRespaldo = {
 };
 
 export const horario = [
-  { dias: 'Lunes – Viernes', horas: '10:00 – 14:00 | 15:00 – 19:00' },
-  { dias: 'Sábado', horas: '8:00 – 13:00' },
+  { dias: 'Lunes – Viernes', horas: '8:00 – 14:00 | 15:00 – 19:00' },
+  { dias: 'Sábado', horas: '8:00 – 14:00 | 15:00 – 19:00' },
   { dias: 'Domingo', horas: 'Cerrado' },
+];
+
+// La foto se busca en src/assets/barberos/<foto>.jpg|png|webp; si no existe se muestran las iniciales.
+export const barberos = [
+  {
+    nombre: 'Luisfer',
+    foto: 'luisfer',
+    horario: [
+      { dias: 'Lunes – Viernes', horas: ['8:00 – 14:00', '15:00 – 19:00'] },
+      { dias: 'Sábado', horas: ['8:00 – 13:00'] },
+      { dias: 'Domingo', horas: ['Cerrado'] },
+    ],
+  },
+  {
+    nombre: 'Manuel',
+    foto: 'manuel',
+    horario: [
+      { dias: 'Lunes – Viernes', horas: ['8:00 – 14:00', '15:00 – 19:00'] },
+      { dias: 'Sábado', horas: ['8:00 – 14:00', '15:00 – 19:00'] },
+      { dias: 'Domingo', horas: ['Cerrado'] },
+    ],
+  },
 ];
 
 export const servicios = [

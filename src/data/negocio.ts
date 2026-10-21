@@ -25,8 +25,8 @@ export const valoracionesRespaldo = {
 };
 
 export const horario = [
-  { dias: 'Lunes – Viernes', horas: '10:00 – 19:00' },
-  { dias: 'Sábado', horas: '10:00 – 14:00' },
+  { dias: 'Lunes – Viernes', horas: '10:00 – 14:00 | 15:00 – 19:00' },
+  { dias: 'Sábado', horas: '8:00 – 13:00' },
   { dias: 'Domingo', horas: 'Cerrado' },
 ];
 

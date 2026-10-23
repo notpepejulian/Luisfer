@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import hero from '../assets/hero.jpg';
+import hero from '../assets/hero-barberia.jpg';
 import { negocio } from '../data/negocio';
 import { getValoraciones, formatoNota } from '../lib/valoraciones';
 import Contador from './Contador.astro';
@@ -9,7 +9,7 @@ const { global } = await getValoraciones();
 ---
 
 <section id="inicio" class="hero">
-  <Image src={hero} alt="Interior de la barbería" class="bg" loading="eager" fetchpriority="high" widths={[640, 1000]} sizes="100vw" />
+  <Image src={hero} alt="Interior de Luisferbarberia" class="bg" loading="eager" fetchpriority="high" widths={[640, 1000, 1600, 2400]} sizes="100vw" />
   <div class="overlay"></div>
   <div class="container content">
     <p class="eyebrow">Barbería en {negocio.ciudad}</p>

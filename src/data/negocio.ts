@@ -20,7 +20,7 @@ export const negocio = {
 
 // Valores de respaldo: se usan si no se pueden obtener en vivo al compilar (ver src/lib/valoraciones.ts).
 export const valoracionesRespaldo = {
-  google: { nota: 5.0, total: 8 },
+  google: { nota: 5.0, total: 26 },
   booksy: { nota: 5.0, total: 159 },
 };
 
